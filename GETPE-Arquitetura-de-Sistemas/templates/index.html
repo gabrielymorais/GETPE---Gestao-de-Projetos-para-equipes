@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f9;
+      }
+      .container {
+          max-width: 800px;
+          margin: 20px auto;
+          padding: 10px;
+      }
+      .add-task-btn {
+          display: inline-block;
+          background-color: #28a745;
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: bold;
+          padding: 10px 20px;
+          border-radius: 8px;
+          text-align: center;
+          margin-bottom: 20px;
+          transition: background-color 0.3s ease;
+      }
+      .add-task-btn:hover {
+          background-color: #218838;
+      }
+      .card {
+          background: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          margin-bottom: 15px;
+      }
+      .card h3 {
+          margin: 0;
+          color: #333;
+      }
+      .card p {
+          margin: 5px 0;
+          color: #555;
+      }
+      .card .status {
+          color: #28a745;
+          font-weight: bold;
+      }
+      .button-group {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+      }
+      .edit-btn, .delete-btn {
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+      .edit-btn {
+          background-color: #007bff;
+          color: white;
+      }
+      .edit-btn:hover {
+          background-color: #0056b3;
+      }
+      .delete-btn {
+          background-color: #dc3545;
+          color: white;
+      }
+      .delete-btn:hover {
+          background-color: #a71d2a;
+      }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <a href="/form/" class="add-task-btn">Adicionar Nova Tarefa</a>
+        <div id="tasks">
+            {% for tarefa in tarefas %}
+            <div class="card">
+              <h3>{{ tarefa.titulo }}</h3>
+              <p>{{ tarefa.descricao }}</p>
+              <p><span class="status">Usuário: {{ tarefa.usuario_nome }}</span></p>
+              <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="edit-btn" onclick="editTask('{{ tarefa.id }}')">Editar</button>
+                <button class="delete-btn" onclick="deleteTask('{{ tarefa.id }}')">Excluir</button>                
+              </div>
+          </div>
+          
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+      function deleteTask(id) {
+          if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
+              fetch(`/tarefas/deletar-tarefa/${id}`, { method: 'DELETE' })
+                  .then(response => {
+                      if (response.ok) {
+                          alert("Tarefa excluída com sucesso!");
+                          window.location.reload();
+                      } else {
+                          alert("Erro ao excluir a tarefa.");
+                      }
+                  });
+          }
+      }
+  
+      function editTask(id) {
+          window.location.href = `/form/?id=${id}`;
+      }
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar/Editar Tarefa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Adicionar Tarefa</h1>
+        <form id="task-form">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao"></textarea>
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="true">Pendente</option>
+                <option value="false">Concluída</option>
+            </select>
+            
+            <label for="usuario_nome">Usuário:</label>
+            <input type="text" id="usuario_nome" name="usuario_nome" required>
+            
+            <button type="submit">Salvar</button>
+        </form>
+        <a href="/" class="back-link">Voltar para a listagem</a>
+    </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const taskId = urlParams.get("id");
+  
+      if (taskId) {
+          // Carrega os dados da tarefa para edição
+          fetch(`/tarefas/listar-tarefas/`)
+              .then(response => response.json())
+              .then(tasks => {
+                  const task = tasks.find(t => t.id == taskId);
+                  if (task) {
+                      document.getElementById("titulo").value = task.titulo;
+                      document.getElementById("descricao").value = task.descricao;
+                      document.getElementById("status").value = task.status ? "true" : "false";
+                      document.getElementById("usuario_nome").value = task.usuario_nome;
+                  }
+              });
+      }
+  
+      const form = document.getElementById('task-form');
+      form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const data = {
+              titulo: document.getElementById('titulo').value,
+              descricao: document.getElementById('descricao').value,
+              status: document.getElementById('status').value === "true",
+              usuario_nome: document.getElementById('usuario_nome').value,
+          };
+          const method = taskId ? 'PUT' : 'POST';
+          const endpoint = taskId ? `/tarefas/editar-tarefa/${taskId}` : '/tarefas/criar-tarefa/';
+          const response = await fetch(endpoint, {
+              method: method,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+          });
+          if (response.ok) {
+              window.location.href = "/";
+          } else {
+              alert("Erro ao salvar a tarefa.");
+          }
+      });
+  </script>  
+</body>
+</html>
