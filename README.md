@@ -139,8 +139,8 @@ Aqui estão algumas capturas de tela da aplicação desenvolvida com Jinja2:
 
 <!-- Adicione suas imagens abaixo -->
 ![Print 1](GETPE-Arquitetura-de-Sistemas/prints/image1.jpeg)
-![Print 2](/prints/image2.jpeg)
-![Print 3](/prints/image3.jpeg)
+![Print 2](GETPE-Arquitetura-de-Sistemas/prints/image2.jpeg)
+![Print 3](GETPE-Arquitetura-de-Sistemas/prints/image3.jpeg)
 
 
 Se tiver dúvidas ou sugestões, fique à vontade para contribuir! 😊
