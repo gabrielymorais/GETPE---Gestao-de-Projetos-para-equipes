@@ -61,6 +61,9 @@ project_name/
 ├── controllers/            # Endpoints da API
 │   ├── usuario_controller.py  # Rotas para gerenciamento de usuários
 │   ├── tarefa_controller.py   # Rotas para gerenciamento de tarefas
+├── templates/              # Camada de Visao
+│   ├── form.html           # Formulario atividade
+│   ├── index.html          # Listagem das tarefas
 ├── tests/                  # Testes da aplicação
 │   ├── postman_collection.json # Coleção Postman para testar os endpoints
 ├── main.py                 # Inicialização do servidor FastAPI
