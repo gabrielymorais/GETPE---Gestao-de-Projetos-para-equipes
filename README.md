@@ -108,7 +108,7 @@ project_name/
 
 3. Instale as dependências:
    ```bash
-   pip install fastapi sqlalchemy uvicorn
+   pip install fastapi sqlalchemy uvicorn jinja2
    ```
 
 4. Execute as migrações para criar o banco de dados:
@@ -118,7 +118,7 @@ project_name/
 
 5. Inicie o servidor FastAPI:
    ```bash
-   uvicorn main:app --reload
+   python -m uvicorn main:app --reload
    ```
 
 6. Acesse a documentação interativa da API no navegador em:
